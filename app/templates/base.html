@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        {% if title %}
+        <title>{{ title }} - Trivia Time</title>
+        {% else %}
+        <title>Welcome to Trivia Time</title>
+        {% endif %}
+    </head>
+    <body>
+        <div class="container-fluid bg-primary text-white p-3">
+            <h1 class="d-inline m-2 text-decoration-none font-italic">Delightful Reading</h1>
+            <h3 class="d-inline"><a href="{{ url_for('index') }}" class="m-2 text-secondary text-reset text-decoration-none font-weight-light">Home</a></h3>
+            <h3 class="d-inline"><a href="{{ url_for('register') }}" class="d-inline m-2 text-secondary text-reset text-decoration-none font-weight-light">Register</a></h3>
+            <h3 class="d-inline"><a href="{{ url_for('login') }}" class="d-inline m-2 text-secondary text-reset text-decoration-none font-weight-light">Login</a></h3>
+            <h3 class="d-inline"><a href="{{ url_for('logout') }}" class="d-inline m-2 text-secondary text-reset text-decoration-none font-weight-light">Logout</a></h3>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="list-unstyle d">
+            {% for message in messages %}
+            <div class="alert alert-secondary" role="alert">
+            <li class="m-2 text-decoration-none">{{ message }}</li></div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <h2></h2>
+        {% block content %}{% endblock %}
+    </body>
+</html>

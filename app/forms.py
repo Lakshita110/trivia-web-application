@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, IntegerField,TextAreaField
 from wtforms.validators import DataRequired, ValidationError, EqualTo, Length, Optional, Email, NumberRange
 from app.models import User 
+#------------------------------------------------------------------------
 
 # Form for registration displayed on register.html.
 class RegisterForm(FlaskForm):    
@@ -16,7 +17,7 @@ class RegisterForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different username.')
 
-# Form for logging in displayed on log.html.
+# Form for logging in displayed on login.html.
 class LoginForm(FlaskForm):    
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container-fluid d-flex justify-content-center p-2"> 
+    <h2 class="m-2 p-2 text-secondary">Hello, {{ current_user.username }}!</h2></div>
+    <div class="container-fluid d-flex justify-content-center p-2 form-group"> 
+        <form class="m-2 p-2 align-content-center text-secondary" method="post">
+        <p>
+            <label>{{ form.select.label }}</label><br>
+            {{ form.select}}<br>
+            {% for error in form.select.errors %}
+            <span class="alert alert-danger">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.search.label }}<br>
+            {{ form.search(size=32) }}<br>
+            {% for error in form.search.errors %}
+            <span class="alert alert-danger">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <input class="btn btn-primary" type="submit" value="Search">        
+    </form></div>
+{% endblock %}

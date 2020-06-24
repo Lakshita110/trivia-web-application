@@ -1,14 +1,13 @@
 from flask import render_template, flash, redirect, url_for, request, jsonify, json
 import json
-import requests
-from . import app, db, forms, models, tables
+from . import db, forms, models
 from .forms import *
 from .models import *
-from .tables import *
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse 
-from sqlalchemy.sql import func
-from statistics import mean 
+# from sqlalchemy.sql import func
+# from statistics import mean 
+#------------------------------------------------------------------------
 
 # Homepage route from where user can search.
 @app.route("/index")
