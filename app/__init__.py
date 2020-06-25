@@ -1,22 +1,24 @@
-from flask import Flask, session, render_template, flash, redirect, url_for, request
-from flask_session import Session
-from flask_login import LoginManager
+from flask.app import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from app.config import Config
 
 db = SQLAlchemy()
-login = LoginManager()
-sess = Session()
+login_manager = LoginManager()
+login_manager.login_view = 'users.login'
 
-def create_app():
-    """Construct the core application."""
-    app = Flask(__name__, instance_relative_config=False)
-    app.config.from_object('config.Config')
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
     db.init_app(app)
+    login_manager.init_app(app)
 
-    with app.app_context():
-        from . import routes  # Import routes
-        from . import auth
-        db.create_all()  # Create sql tables for our data models
+    from app.users.routes import users
+    from app.quiz.routes import quiz
+    from app.home.routes import home
+    app.register_blueprint(users)
+    app.register_blueprint(quiz)
+    app.register_blueprint(home)
 
-        return app
+    return app
