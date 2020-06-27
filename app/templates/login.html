@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container col-3 mx-auto py-2 bg-pink-opaque align-content-center"> 
+    <p class="page-title">Log In</p>
+    <div class="container-fluid d-flex form-group">
+    <form class="" action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p class="font-text">
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br>
+            {% for error in form.username.errors %}
+            <span class="clr2">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p class="font-text">
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+            <span class="clr2">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p class="font-text">{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p class="font-text">{{ form.submit() }}</p>
+    </form></div><div class="">
+    <p>New User? 
+        <a class="clr1" href="{{ url_for('main.register') }}">Click to Register!</a>
+    </p>
+    </div>
+</div>
+{% endblock %}

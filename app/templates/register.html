@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container col-3 mx-auto py-2 bg-pink-opaque align-content-center"> 
+    <p class="page-title">Register</p>
+    <div class="container-fluid d-flex form-group">
+    <form class="" action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p class="font-text">
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br>
+            {% for error in form.username.errors %}
+            <span class="clr2">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p class="font-text">
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}<br>
+            {% for error in form.email.errors %}
+            <span class="clr2">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p class="font-text">
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+            <span class="clr2">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p class="font-text">
+            {{ form.password2.label }}<br>
+            {{ form.password2(size=32) }}<br>
+            {% for error in form.password2.errors %}
+            <span class="clr2">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p class="font-text">{{ form.submit() }}</p>
+    </form></div><div class="">
+    </div>
+</div>
+{% endblock %}
