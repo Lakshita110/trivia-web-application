@@ -1,4 +1,41 @@
-{{ extends base.html }}
+{% extends 'base.html' %}
 
-{{ block content }}
-{{ endblock }}
+{% block content %}
+<div style="width:40%;" class="container bg-pink-opaque p-3 mb-2"> 
+    <p class="page-title">Quiz</p>
+    <p>Check the correct answer and increase your score based on the question's difficulty. It's Trivia Time!</p></div>
+{% for question in questions %}
+<div style="width:40%;" class="container bg-pink-opaque p-3 mb-2">
+    <p class="clr1">{{ question["category"]|safe }} : {{ question["difficulty"].capitalize()|safe }}</p> 
+    <p class="bg-shadow"> {{ question["question"]|safe }}</p>
+    <div class=" container form-check">
+        {% for answer in question["answers"] %}
+
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+        <label class="form-check-label" for="exampleRadios1">
+          {{ answer }}
+        </label>
+        </div>
+
+        {% endfor %}
+
+
+
+    <!-- <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Answers
+        </button>
+    <div class="dropdown-menu" aria-labelledby="Pick an answer">
+        {% for answer in question["answers"] %}
+        <a class="dropdown-item" href="#">{{ answer }}</a> 
+        {% endfor %}   
+    </div>    
+    </div> -->
+
+    <!-- <p>{{ question["correct_answer"]|safe }}</p>
+    <p>{{ question["incorrect_answers"]|safe }}</p>
+    <p>{{ question["answers"]|safe }}</p> -->
+    
+</div>
+{% endfor %}
+{% endblock %}

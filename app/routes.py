@@ -1,20 +1,42 @@
-from flask import render_template, flash, redirect, url_for, request, jsonify, json, Blueprint
-from flask_login import current_user, login_user, logout_user, login_required
-from werkzeug.urls import url_parse 
+import html
+import random
+from statistics import mean
+import requests
+from flask import (Blueprint, flash, json, jsonify, redirect, render_template,
+                   request, url_for)
+from flask_login import current_user, login_required, login_user, logout_user
 from sqlalchemy.sql import func
-from statistics import mean 
-from .forms import LoginForm, RegisterForm
-from .models import User
+from werkzeug.urls import url_parse
 from app import db
+from .forms import GenerateQuizForm, LoginForm, RegisterForm
+from .models import User
 
 main = Blueprint('main', __name__)
 
 # Homepage route from where user can search.
 @main.route("/home")
 @main.route("/", methods=['GET','POST'])
-# @login_required
+@login_required
 def index():
-    return render_template('home.html', title='Home')
+    form = GenerateQuizForm()
+    if form.validate_on_submit():            
+        amount = form.amount.data
+        category = form.category.data
+        difficulty = form.difficulty.data
+        if category== 0 and difficulty=='any':
+            res_api = requests.get("https://opentdb.com/api.php?type=multiple",params={"amount": amount}) 
+        elif category==0:
+            res_api = requests.get("https://opentdb.com/api.php?type=multiple",params={"amount": amount, "difficulty": difficulty})
+        else:
+            res_api = requests.get("https://opentdb.com/api.php?type=multiple",params={"amount": amount, "difficulty": difficulty, "category":category})
+        content = res_api.json()
+        questions = content['results']
+        for i in questions:
+            i["answers"] = [i for i in i["incorrect_answers"]]
+            i["answers"].append((i["correct_answer"]))
+            random.shuffle(i["answers"])
+        return render_template('quiz.html', title='Quiz', questions = questions)
+    return render_template('home.html', title='Start', form = form)
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -49,3 +71,13 @@ def register():
         flash('Congratulations, you are registered!')
         return redirect(url_for('main.login'))
     return render_template('register.html',title='Register', form=form)
+
+@main.route('/logout')
+def logout():
+    if current_user.is_authenticated:
+        logout_user()
+        flash("Sucessfully logged out!")
+        return redirect(url_for('main.login'))
+    else:
+        flash("You're not logged in")
+        return redirect(url_for('main.login'))

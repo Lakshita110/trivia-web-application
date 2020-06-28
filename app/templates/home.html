@@ -1,5 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div style="width:30%;" class="container bg-pink-opaque p-3"> 
+    <p class="page-title">Generate Quiz</p>
+    <div style="width:auto;" class="container form-group p-0">
+    <form class="" action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="font-text form-group container-fluid">
+            {{ form.amount.label(class="") }}
+            {{ form.amount(class="p-1 col-3 ml-2") }}<br>
+            {% for error in form.amount.errors %}
+            <span class="clr2">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div style="width:auto;" class="font-text form-group container-fluid">
+            {{ form.category.label }}<br>
+            {{ form.category(class="p-1 mb-2") }}<br>
+            {% for error in form.category.errors %}
+            <span class="clr2">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="font-text form-group container-fluid">
+            {{ form.difficulty.label }}<br>
+            {{ form.difficulty(class="p-1 mb-2") }}<br>
+            {% for error in form.difficulty.errors %}
+            <span class="clr2">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <p class="font-text ml-3 mt-2">{{ form.submit() }}</p>
+    </form></div><div class="">
+</div>
 {% endblock %}
