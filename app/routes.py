@@ -10,6 +10,7 @@ from werkzeug.urls import url_parse
 from app import db
 from .forms import GenerateQuizForm, LoginForm, RegisterForm
 from .models import User
+from flask import session
 
 main = Blueprint('main', __name__)
 
@@ -27,16 +28,46 @@ def index():
             res_api = requests.get("https://opentdb.com/api.php?type=multiple",params={"amount": amount}) 
         elif category==0:
             res_api = requests.get("https://opentdb.com/api.php?type=multiple",params={"amount": amount, "difficulty": difficulty})
+        elif difficulty=='any':
+            res_api = requests.get("https://opentdb.com/api.php?type=multiple",params={"amount": amount, "category":category})
         else:
             res_api = requests.get("https://opentdb.com/api.php?type=multiple",params={"amount": amount, "difficulty": difficulty, "category":category})
         content = res_api.json()
-        questions = content['results']
-        for i in questions:
-            i["answers"] = [i for i in i["incorrect_answers"]]
-            i["answers"].append((i["correct_answer"]))
-            random.shuffle(i["answers"])
+        questions = html.unescape(content['results'])
+        session['questions'] = questions
+        for question in questions:
+            question["answers"] = [i for i in question["incorrect_answers"]]
+            question["answers"].append((question["correct_answer"]))
+            random.shuffle(question["answers"])
         return render_template('quiz.html', title='Quiz', questions = questions)
     return render_template('home.html', title='Start', form = form)
+    
+
+@main.route("/score", methods=['GET','POST'])
+@login_required
+def score():
+    if request.method == 'POST':
+        questions = session.get('questions')
+        score = 0
+        for i in range(len(questions)):
+            answer = request.form[str(i)]
+            question = questions[i]
+            if question["correct_answer"] == answer:
+                score += 1 
+                question["correct"] = "correct!"
+            else:
+                question["correct"] = "incorrect!"
+        user = User.query.filter_by(id=session["current_user"]).first()
+        user.score += score
+        db.session.commit()
+        session["questions"] = {} 
+    return render_template('score.html', score=score, questions=questions, total_score=user.score)
+
+@main.route("/profile", methods=['GET','POST'])
+@login_required
+def profile():
+    user = User.query.filter_by(id=session["current_user"]).first()
+    return render_template('profile.html', user=user)
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -46,6 +77,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
+        session["current_user"] = user.id 
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('main.login'))

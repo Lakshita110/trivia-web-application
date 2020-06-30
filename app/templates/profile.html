@@ -1,4 +1,8 @@
-{{ extends base.html }}
+{% extends 'base.html' %}
 
-{{ block content }}
-{{ endblock }}
+{% block content %}
+<div class="container col-3 mx-auto bg-pink-opaque p-4"> 
+    <p class="page-title">{{user.username}}'s Profile</p>
+    <p class="font-text">Email: {{ user.email }}</p>
+    <p class="font-text">Score: {{ user.score }}</p>
+{% endblock %}

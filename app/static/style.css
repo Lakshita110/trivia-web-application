@@ -18,7 +18,7 @@ body.body {
 }
 
 /* colors */
-.clr1{
+p .clr1{
     color:#48286B;
 }
 
@@ -80,4 +80,8 @@ p {
     font-size: xx-large;
     color: #DC96BA;
 
+}
+
+a .clr1{
+    color:#48286B;
 }

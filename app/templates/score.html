@@ -1,4 +1,15 @@
-{{ extends base.html }}
+{% extends 'base.html' %}
 
-{{ block content }}
-{{ endblock }}
+{% block content %}
+<div style="width:40%;" class="container bg-pink-opaque p-3 mb-2">
+<p class="page-title">Final Score: {{ score }}</p>
+<p class="font-text clr1"><a class="clr1" href="{{ url_for('main.index') }}">Take another quiz!</a></p>
+<p class="font-text">Your Total Score: {{ total_score }}</p></div>
+{% for question in questions %}
+<div style="width:40%;" class="container bg-pink-opaque p-3 mb-2">
+    <p class="clr1">{{ question["category"]|safe }} : {{ question["difficulty"].capitalize()|safe }}</p> 
+    <p class="bg-shadow"> {{ question["question"]|safe }}</p>        
+    <p class="bg-shadow d-inline">Correct Answer: <p class="d-inline clr2">{{ question["correct_answer"]|safe }}</p></p>
+    <p class="bg-shadow">You got the question {{ question["correct"]|safe }}</p></div> 
+    {% endfor %} 
+{% endblock %}
