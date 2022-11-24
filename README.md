@@ -1,4 +1,6 @@
-# Trivia-Web-Application
+# Trivia Web Application
+A Flask web application using a TriviaDB API allows users to log in and play a trivia game and track their progress.
+
 
 # Plan for Trivia-Time Directory: 
 	(within main directory)
