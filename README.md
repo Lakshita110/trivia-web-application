@@ -12,7 +12,7 @@ Lakshita Jain - [Linkedin](https://www.linkedin.com/in/lakshita-jain-072b4a19b/)
 
 Project Link: [https://github.com/Lakshita110/Trivia-Web-Application](https://github.com/Lakshita110/Trivia-Web-Application)
 
-# Directory: 
+### Directory
 	(within main directory)
 	· app
 		○ home 
