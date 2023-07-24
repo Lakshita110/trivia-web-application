@@ -46,4 +46,3 @@ Project Link: [https://github.com/Lakshita110/Trivia-Web-Application](https://gi
 	· .env
 	· trivia_time.py
 	· base.html
-README.md 
