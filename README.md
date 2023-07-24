@@ -1,8 +1,18 @@
-# Trivia Web Application
-A Flask web application using a TriviaDB API allows users to log in and play a trivia game and track their progress.
+## About The Project
+This is a Flask web application built using the [Open TriviaDB API](https://opentdb.com/api_config.php) that allows users to log in and play a trivia game and track their progress.
 
+### Built With
+* Flask
+* Python
+* SQLAlchemy
+* Open TriviaDB API
 
-# Plan for Trivia-Time Directory: 
+## Contact
+Lakshita Jain - [Linkedin](https://www.linkedin.com/in/lakshita-jain-072b4a19b/) - lak.jai110@gmail.com
+
+Project Link: [https://github.com/Lakshita110/Trivia-Web-Application](https://github.com/Lakshita110/Trivia-Web-Application)
+
+# Directory: 
 	(within main directory)
 	· app
 		○ home 
